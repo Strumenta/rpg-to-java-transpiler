@@ -146,6 +146,7 @@ private fun Expression.wrappedType() : Type {
     return try {
         this.type()
     } catch (e: NotImplementedError) {
+        // This is a workaround for an issue in Jariko, which we cannot fix as part of this tutorial
         StringType(-1, true)
     }
 }
