@@ -1,27 +1,19 @@
 package com.strumenta.rpgtojava
 
-import com.github.javaparser.JavaParser
-import com.github.javaparser.ast.Modifier
-import com.github.javaparser.ast.NodeList
-import com.github.javaparser.ast.expr.*
-import com.github.javaparser.ast.stmt.BlockStmt
-import com.github.javaparser.ast.stmt.ExpressionStmt
-import com.github.javaparser.ast.stmt.IfStmt
-import com.github.javaparser.ast.type.PrimitiveType
 import com.github.javaparser.printer.PrettyPrinterConfiguration
 import com.smeup.rpgparser.interpreter.*
 import com.smeup.rpgparser.parsing.ast.*
-import com.smeup.rpgparser.parsing.ast.Expression
 import com.smeup.rpgparser.parsing.facade.RpgParserFacade
 import com.smeup.rpgparser.parsing.parsetreetoast.resolveAndValidate
-import com.strumenta.rpgtojava.intermediateast.*
+import com.strumenta.rpgtojava.transformations.transformFromIntermediateToJava
+import com.strumenta.rpgtojava.transformations.transformFromRPGtoIntermediate
 import java.io.File
 import java.io.FileInputStream
 import kotlin.system.exitProcess
 
-fun transform(rpgCu: CompilationUnit, name: String) : com.github.javaparser.ast.CompilationUnit {
-    val gProgram = transformFromRPGtoIntermediate(rpgCu, name)
-    val javaAst = transformFromIntermediateToJava(gProgram)
+fun transform(rpgAst: CompilationUnit, name: String) : com.github.javaparser.ast.CompilationUnit {
+    val intermediateAst = transformFromRPGtoIntermediate(rpgAst, name)
+    val javaAst = transformFromIntermediateToJava(intermediateAst)
     return javaAst
 }
 

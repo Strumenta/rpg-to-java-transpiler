@@ -1,4 +1,4 @@
-package com.strumenta.rpgtojava
+package com.strumenta.rpgtojava.transformations
 
 import com.github.javaparser.JavaParser
 import com.github.javaparser.ast.Modifier

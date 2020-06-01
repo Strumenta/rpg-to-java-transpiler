@@ -1,4 +1,4 @@
-package com.strumenta.rpgtojava
+package com.strumenta.rpgtojava.transformations
 
 import com.smeup.rpgparser.interpreter.*
 import com.smeup.rpgparser.parsing.ast.*
