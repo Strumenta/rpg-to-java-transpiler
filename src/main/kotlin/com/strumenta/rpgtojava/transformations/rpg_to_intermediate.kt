@@ -49,10 +49,11 @@ fun transformFromRPGtoIntermediate(rpgCu: CompilationUnit, name: String) : GProg
     rpgCu.entryPlist?.params?.forEach {
         program.mainFunction.parameters.add(GFunction.Parameter(it.param.referred!!.name, it.param.referred!!.type.toGType()))
     }
-    program.mainFunction.body.addAll(rpgCu.main.stmts.map { it.toGStatements(ctx) }.flatten())
+    program.mainFunction.body.addAll(rpgCu.main.stmts.toGStatements(ctx))
+    // Translate subroutines
     rpgCu.subroutines.forEach {
         val gf = ctx.toGFunction(it)
-        gf.body.addAll(it.stmts.map { it.toGStatements(ctx) }.flatten())
+        gf.body.addAll(it.stmts.toGStatements(ctx))
     }
     return program
 }
@@ -74,7 +75,7 @@ private fun Statement.toGStatements(ctx: RpgToIntermediateContext) : List<GState
             }
 
             if (this.other != null) {
-                elseCase = GSwitchStmt.Else(this.other!!.body.map { it.toGStatements(ctx) }.flatten())
+                elseCase = GSwitchStmt.Else(this.other!!.body.toGStatements(ctx))
             }
 
             listOf(GSwitchStmt(cases, elseCase))

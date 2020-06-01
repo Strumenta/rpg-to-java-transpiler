@@ -23,20 +23,22 @@ fun generate(javaAst: com.github.javaparser.ast.CompilationUnit) : String {
     return javaAst.toString(PrettyPrinterConfiguration())
 }
 
-fun transformRpgToIntermediate(source: InputStream, name: String) : GProgram {
+fun parseRpgCode(source: InputStream) : CompilationUnit {
     val facade = RpgParserFacade()
     facade.muteSupport = false
     val rpgAst = facade.parseAndProduceAst(source)
     rpgAst.resolveAndValidate(DummyDBInterface)
+    return rpgAst
+}
+
+fun transformRpgToIntermediate(source: InputStream, name: String) : GProgram {
+    val rpgAst = parseRpgCode(source)
     return transformFromRPGtoIntermediate(rpgAst, name)
 }
 
 fun transpileRpgToJava(source: InputStream, name: String) : String {
-    val facade = RpgParserFacade()
-    facade.muteSupport = false
-    val rpgCu = facade.parseAndProduceAst(source)
-    rpgCu.resolveAndValidate(DummyDBInterface)
-    val javaAst = transform(rpgCu, name)
+    val rpgAst = parseRpgCode(source)
+    val javaAst = transform(rpgAst, name)
     return generate(javaAst)
 }
 
