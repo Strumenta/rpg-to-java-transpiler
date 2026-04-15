@@ -2,6 +2,8 @@
 
 This repository contains a simple transpiler from RPG code to Java.
 
+While this is an example for educational purposes, a commercially-backed solution is available at [RPG2Java](https://rpg2java.com)
+
 This code was written for the tutorial on transpilers at  [https://tomassetti.me/how-to-write-a-transpiler/]( https://tomassetti.me/how-to-write-a-transpiler/).
 
 This project takes advantage of:
